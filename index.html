@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TestApp</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body>
+
+<!-- Image and text -->
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="logo-26.svg" width="30" height="30" class="d-inline-block align-top"
+             alt="">
+        TestApp
+    </a>
+</nav>
+
+<div id="app" class="container">
+	<div v-if="user">
+		Vous etes connecté en tant que <b>{{user.name}}</b>
+	</div>
+	<div v-else>
+		<a href="#!"  class="btn btn-primary font-weight-bold" data-toggle="modal" data-target="#login-form">Se connecter</a>
+	</div>
+
+	<div class="row">
+		<div class="col col-lg-8">
+			<h3 class="font-weight-bold">Liste des commentaires <span class="badge badge-info">{{comments.length}}</span>
+				<a @click="loadComments" class="btn btn-sm font-weight-bold btn-primary text-light" v-if="user">actualiser</a>
+			</h3>
+
+			<div class="text-center" v-if="loading">
+				<div class="spinner-border text-primary" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
+
+			<div class="list-group" v-if="comments.length">
+				<a href="#" class="list-group-item list-group-item-action flex-column align-items-start" v-for="comment in comments">
+					<div class="d-flex w-100 justify-content-between">
+<!--						<h5 class="mb-1">List group item heading</h5>-->
+						<small>by {{comment.user}}</small>
+					</div>
+					<p class="mb-1"><b>{{comment.content}}</b></p>
+					<p class="text-right"><small>{{comment.created_at}}.</small></p>
+
+				</a>
+			</div>
+			<div class="alert alert-info" v-else>
+				<p v-if="user">Aucun commentaire</p>
+				<p v-else>Veuillez vous connecter voir les commentaires <br>
+					Email : michee@gmail.com <br>
+					Mot de passe : 12345678
+				</p>
+			</div>
+		</div>
+		<div class="col col-lg-4">
+			<form action="" @submit="postComment">
+				<legend class="font-weight-bold">Commenter</legend>
+				<div class="form-group">
+					<textarea v-model="message" required rows="5" class="form-control" placeholder="Votre commentaire..."></textarea>
+				</div>
+				<input type="submit" value="Poster" class="btn font-weight-bold btn-sm btn-primary">
+			</form>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="login-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Se connecter à <b>TestApp</b></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="email" class="col-form-label">Email</label>
+							<input type="email" class="form-control" id="email" v-model="email">
+						</div>
+						<div class="form-group">
+							<label for="pwd" class="col-form-label">Mot de passe</label>
+							<input type="password" v-model="password" id="pwd" class="form-control">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" @click="login">Connexion</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"-->
+<!--        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"-->
+<!--        crossorigin="anonymous"></script>-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>

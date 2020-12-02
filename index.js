@@ -17,6 +17,13 @@ new Vue({
         postComment(e) {
             let _this = this;
             e.preventDefault();
+            if(!this.user){
+                Toastify({
+                    text: "Veuillez d'abord vous connecter",
+                    backgroundColor: "red"
+                }).showToast();
+                return ;
+            }
             $.post(`http://localhost:8000/api/comments?api_token=${this.token}`, {content: this.message}, function (data) {
                 //alert(JSON.stringify(data));
                 if (data != null && data.id) {
